@@ -6,7 +6,12 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            throw new NotImplementedException();
+            return IsWrappedInDoubleQuotes(input);
+        }
+
+        static bool IsWrappedInDoubleQuotes(string input)
+        {
+            return input.Length > 1 && input[0] == '"' && input[input.Length - 1] == '"';
         }
     }
 }
