@@ -6,20 +6,25 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            return !IsNullOrEmpty(input) && ContainsDigits(input) && !StartsWithZero(input);
+            return !IsNullOrEmpty(input) && ContainsDigits(input) && IsAValidNumber(input);
+        }
+
+        static bool IsAValidNumber(string input)
+        {
+            return !StartsWithZero(input) && !EndWithADot(input) && !HaveMoreThanOneFractionParts(input);
         }
 
         static bool ContainsDigits(string input)
         {
             foreach (char c in input)
             {
-                if (char.IsDigit(c))
+                if (!char.IsDigit(c))
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         static bool IsNullOrEmpty(string input)
@@ -29,7 +34,31 @@ namespace Json
 
         static bool StartsWithZero(string input)
         {
-            return input.StartsWith('0') && input[1] != '.';
+            return input.StartsWith('0') && input.Length > 1 && input[1] != '.';
+        }
+
+        static bool EndWithADot(string input)
+        {
+            return input.EndsWith('.');
+        }
+
+        static bool HaveMoreThanOneFractionParts(string input)
+        {
+            return CountDots(input) > 1;
+        }
+
+        static int CountDots(string input)
+        {
+            int count = 0;
+            foreach (char c in input)
+            {
+                if (c == '.')
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
     }
 }
