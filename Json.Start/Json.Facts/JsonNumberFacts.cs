@@ -30,13 +30,13 @@ namespace Json.Facts
             Assert.True(IsJsonNumber("70"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void IsNotNull()
         {
             Assert.False(IsJsonNumber(null));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void IsNotAnEmptyString()
         {
             Assert.False(IsJsonNumber(string.Empty));
