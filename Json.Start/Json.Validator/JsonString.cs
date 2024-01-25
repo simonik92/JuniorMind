@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            return !IsNull(input) && IsWrappedInDoubleQuotes(input);
+            return !IsNullOrEmpty(input) && IsWrappedInDoubleQuotes(input);
         }
 
         static bool IsWrappedInDoubleQuotes(string input)
@@ -14,9 +14,9 @@ namespace Json
             return input.Length > 1 && input[0] == '"' && input[input.Length - 1] == '"';
         }
 
-        static bool IsNull(string input)
+        static bool IsNullOrEmpty(string input)
         {
-            return input == null;
+            return string.IsNullOrEmpty(input);
         }
     }
 }
