@@ -12,19 +12,19 @@ namespace Json.Facts
             Assert.True(IsJsonNumber("0"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void DoesNotContainLetters()
         {
             Assert.False(IsJsonNumber("a"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void CanHaveASingleDigit()
         {
             Assert.True(IsJsonNumber("7"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void CanHaveMultipleDigits()
         {
             Assert.True(IsJsonNumber("70"));

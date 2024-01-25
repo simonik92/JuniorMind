@@ -6,7 +6,20 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            throw new NotImplementedException();
+            return ContainsDigits(input);
+        }
+
+        static bool ContainsDigits(string input)
+        {
+            foreach (char c in input)
+            {
+                if (char.IsDigit(c))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
