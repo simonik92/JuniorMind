@@ -6,12 +6,17 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            return IsWrappedInDoubleQuotes(input);
+            return !IsNull(input) && IsWrappedInDoubleQuotes(input);
         }
 
         static bool IsWrappedInDoubleQuotes(string input)
         {
             return input.Length > 1 && input[0] == '"' && input[input.Length - 1] == '"';
+        }
+
+        static bool IsNull(string input)
+        {
+            return input == null;
         }
     }
 }
