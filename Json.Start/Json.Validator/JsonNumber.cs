@@ -29,7 +29,7 @@ namespace Json
 
         static bool StartsWithZero(string input)
         {
-            return input.StartsWith('0');
+            return input.StartsWith('0') && input[1] != '.';
         }
     }
 }

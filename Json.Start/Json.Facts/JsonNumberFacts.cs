@@ -60,13 +60,13 @@ namespace Json.Facts
             Assert.True(IsJsonNumber("-0"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void CanBeFractional()
         {
             Assert.True(IsJsonNumber("12.34"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void TheFractionCanHaveLeadingZeros()
         {
             Assert.True(IsJsonNumber("0.00000001"));
