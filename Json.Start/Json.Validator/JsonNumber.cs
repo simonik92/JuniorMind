@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            return !IsNullOrEmpty(input) && ContainsDigits(input);
+            return !IsNullOrEmpty(input) && ContainsDigits(input) && !StartsWithZero(input);
         }
 
         static bool ContainsDigits(string input)
@@ -25,6 +25,11 @@ namespace Json
         static bool IsNullOrEmpty(string input)
         {
             return string.IsNullOrEmpty(input);
+        }
+
+        static bool StartsWithZero(string input)
+        {
+            return input.StartsWith('0');
         }
     }
 }
