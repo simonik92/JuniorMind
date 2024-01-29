@@ -11,17 +11,24 @@ namespace Json
 
         static bool IsAValidNumber(string input)
         {
-            return !StartsWithZero(input) && !EndWithADot(input) && !HaveMoreThanOneFractionParts(input) && CanBeNegative(input);
+            return !StartsWithZero(input) && !EndWithADot(input) && !HaveMoreThanOneFractionParts(input);
         }
 
         static bool ContainsDigits(string input)
         {
                 foreach (char c in input)
                 {
-                    if (char.IsDigit(c))
+                  if (char.IsDigit(c))
+                  {
+                    const string searchString = "-";
+                    const StringComparison comparison = StringComparison.InvariantCulture;
+                    if (input.StartsWith(searchString, comparison))
                     {
                         return true;
                     }
+
+                    return true;
+                  }
                 }
 
                 return false;
@@ -59,13 +66,6 @@ namespace Json
             }
 
             return count;
-        }
-
-        static bool CanBeNegative(string input)
-        {
-            const string searchString = "-";
-            const StringComparison comparison = StringComparison.InvariantCulture;
-            return input.StartsWith(searchString, comparison);
         }
     }
 }
