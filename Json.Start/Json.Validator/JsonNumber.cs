@@ -16,15 +16,15 @@ namespace Json
 
         static bool ContainsDigits(string input)
         {
-            foreach (char c in input)
-            {
-                if (!char.IsDigit(c))
+                foreach (char c in input)
                 {
-                    return false;
+                    if (char.IsDigit(c))
+                    {
+                        return true;
+                    }
                 }
-            }
 
-            return true;
+                return false;
         }
 
         static bool IsNullOrEmpty(string input)
