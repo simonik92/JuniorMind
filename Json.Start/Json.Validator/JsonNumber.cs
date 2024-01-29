@@ -51,6 +51,7 @@ namespace Json
 
         static bool HaveMoreThanOneFractionParts(string input)
         {
+            int count = 0;
             if (CountDots(input) == 1 || CountDots(input) == 0)
             {
                 foreach (char c in input)
@@ -59,10 +60,14 @@ namespace Json
                     {
                         return true;
                     }
+                    else if (char.IsLetter(c) && IsExponent(c))
+                    {
+                        count++;
+                    }
                 }
             }
 
-            return CountDots(input) > 1;
+            return CountDots(input) > 1 || count > 1;
         }
 
         static int CountDots(string input)
