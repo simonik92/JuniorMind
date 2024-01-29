@@ -57,7 +57,7 @@ namespace Json
                 {
                     if (char.IsLetter(c))
                     {
-                        return true;
+                        return !IsFractionalExponent(c);
                     }
                 }
             }
@@ -77,6 +77,11 @@ namespace Json
             }
 
             return count;
+        }
+
+        static bool IsFractionalExponent(char c)
+        {
+            return c == 'e' || c == 'E';
         }
     }
 }
