@@ -51,13 +51,13 @@ namespace Json
 
         static bool HaveMoreThanOneFractionParts(string input)
         {
-            if (CountDots(input) == 1)
+            if (CountDots(input) == 1 || CountDots(input) == 0)
             {
                 foreach (char c in input)
                 {
-                    if (char.IsLetter(c))
+                    if (char.IsLetter(c) && !IsExponent(c))
                     {
-                        return !IsFractionalExponent(c);
+                        return true;
                     }
                 }
             }
@@ -79,7 +79,7 @@ namespace Json
             return count;
         }
 
-        static bool IsFractionalExponent(char c)
+        static bool IsExponent(char c)
         {
             return c == 'e' || c == 'E';
         }
