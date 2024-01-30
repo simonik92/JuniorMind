@@ -56,11 +56,11 @@ namespace Json
             {
                 foreach (char c in input)
                 {
-                    if (char.IsLetter(c) && !IsExponent(c))
+                    if (char.IsLetter(c) && !IsExponent(c, input))
                     {
                         return true;
                     }
-                    else if (char.IsLetter(c) && IsExponent(c))
+                    else if (char.IsLetter(c) && IsExponent(c, input))
                     {
                         count++;
                     }
@@ -84,9 +84,30 @@ namespace Json
             return count;
         }
 
-        static bool IsExponent(char c)
+        static bool IsExponent(char c, string input)
         {
+            if (c == 'e' || c == 'E')
+            {
+                return CheckTheExponent(c, input);
+            }
+
             return c == 'e' || c == 'E';
+        }
+
+        static bool CheckTheExponent(char c, string input)
+        {
+            int index = input.IndexOf(c);
+            if (input.EndsWith(c) || input.EndsWith('+') || input.EndsWith('-'))
+            {
+                return false;
+            }
+            else if (input[index + 1] != '+' && input[index + 1] != '-')
+            {
+                return false;
+            }
+
+            const int placeForDigit = 2;
+            return char.IsDigit(input[index + placeForDigit]);
         }
     }
 }
