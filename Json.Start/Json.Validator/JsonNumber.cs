@@ -84,30 +84,10 @@ namespace Json
             return count;
         }
 
-        static bool IsExponent(char c, string input)
+        static bool IsExponent(char c, string str)
         {
-            if (c == 'e' || c == 'E')
-            {
-                return CheckTheExponent(c, input);
-            }
-
-            return c == 'e' || c == 'E';
-        }
-
-        static bool CheckTheExponent(char c, string input)
-        {
-            int index = input.IndexOf(c);
-            if (input.EndsWith(c) || input.EndsWith('+') || input.EndsWith('-'))
-            {
-                return false;
-            }
-            else if (input[index + 1] != '+' && input[index + 1] != '-')
-            {
-                return false;
-            }
-
-            const int placeForDigit = 2;
-            return char.IsDigit(input[index + placeForDigit]);
+            double result;
+            return (str.Contains("E") || str.Contains("e")) && double.TryParse(str, out result);
         }
     }
 }
