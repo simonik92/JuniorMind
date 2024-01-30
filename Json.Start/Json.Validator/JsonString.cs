@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            return !IsNullOrEmpty(input) && IsWrappedInDoubleQuotes(input) && !ContainsControlCharacters(input);
+            return !IsNullOrEmpty(input) && IsWrappedInDoubleQuotes(input) && !ContainsControlCharacters(input) && ContainsEscapeCharacter(input);
         }
 
         static bool IsWrappedInDoubleQuotes(string input)
@@ -30,6 +30,39 @@ namespace Json
             }
 
             return false;
+        }
+
+        static bool ContainsEscapeCharacter(string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == '\\')
+                {
+                    return CheckEscapeCharacter(input, i);
+                }
+            }
+
+            return true;
+        }
+
+        static bool CheckEscapeCharacter(string input, int i)
+        {
+            char[] escapeSymbols = { '\'', '"', '\\', '0', 'a', 'b', 'f', 'n', 'r', 't', 'v', 'u' };
+
+            if (i < input.Length)
+            {
+                return false;
+            }
+
+            for (int j = 0; j < escapeSymbols.Length; j++)
+            {
+                if (input[i + 1] != escapeSymbols[j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
