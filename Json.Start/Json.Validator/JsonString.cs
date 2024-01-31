@@ -47,22 +47,18 @@ namespace Json
 
         static bool CheckEscapeCharacter(string input, int i)
         {
-            char[] escapeSymbols = { '\'', '"', '\\', '0', 'a', 'b', 'f', 'n', 'r', 't', 'v', 'u' };
-
-            if (i < input.Length)
-            {
-                return false;
-            }
+            int count = 0;
+            const string escapeSymbols = "\\\"/bfnrtu";
 
             for (int j = 0; j < escapeSymbols.Length; j++)
             {
-                if (input[i + 1] != escapeSymbols[j])
+                if (input[i + 1] == escapeSymbols[j])
                 {
-                    return false;
+                    count++;
                 }
             }
 
-            return true;
+            return count > 0;
         }
     }
 }
