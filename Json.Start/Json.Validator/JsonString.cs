@@ -36,7 +36,12 @@ namespace Json
         {
             for (int i = 0; i < input.Length; i++)
             {
-                if (input[i] == '\\')
+                const int positionOfLastChar = 2;
+                if (input[input.Length - positionOfLastChar] == '\\')
+                {
+                    return false;
+                }
+                else if (input[i] == '\\')
                 {
                     return CheckEscapeCharacter(input, i);
                 }
