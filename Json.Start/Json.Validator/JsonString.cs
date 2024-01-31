@@ -6,7 +6,12 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            return !IsNullOrEmpty(input) && IsWrappedInDoubleQuotes(input) && !ContainsControlCharacters(input) && ContainsEscapeCharacter(input);
+            return !IsNullOrEmpty(input) && IsWrappedInDoubleQuotes(input) && IsAValidString(input);
+        }
+
+        public static bool IsAValidString(string input)
+        {
+            return !ContainsControlCharacters(input) && ContainsEscapeCharacter(input) && !EndsWithAnUnfinishedHexNumber(input);
         }
 
         static bool IsWrappedInDoubleQuotes(string input)
@@ -64,6 +69,44 @@ namespace Json
             }
 
             return count > 0;
+        }
+
+        static bool EndsWithAnUnfinishedHexNumber(string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == '\\' && input[i + 1] == 'u')
+                {
+                    return !CheckHexNumber(input, i + 1);
+                }
+            }
+
+            return false;
+        }
+
+        static bool CheckHexNumber(string input, int i)
+        {
+            const string hexaDigits = "0123456789ABCDEF";
+            const int numberOfHexDigits = 4;
+            int countTheHexDigits = 0;
+
+            if (input.Length - 1 < i + 1 + numberOfHexDigits)
+            {
+                return false;
+            }
+
+            for (int j = i + 1; j < (i + 1) + numberOfHexDigits; j++)
+            {
+                for (int hexaDigitPosition = 0; hexaDigitPosition < hexaDigits.Length; hexaDigitPosition++)
+                {
+                    if (char.ToUpper(input[j]) == hexaDigits[hexaDigitPosition])
+                    {
+                        countTheHexDigits++;
+                    }
+                }
+            }
+
+            return countTheHexDigits == numberOfHexDigits;
         }
     }
 }
