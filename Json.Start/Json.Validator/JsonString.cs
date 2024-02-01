@@ -26,10 +26,9 @@ namespace Json
 
         static bool ContainsControlCharacters(string input)
         {
-            const int controlCharactersCode = 32;
             foreach (char c in input)
             {
-                if (c < controlCharactersCode)
+                if (c < '!')
                 {
                     return true;
                 }
