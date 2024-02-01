@@ -64,18 +64,9 @@ namespace Json
 
         static bool CheckEscapeCharacter(string input, int i)
         {
-            int count = 0;
             const string escapeSymbols = "\\\"/bfnrtu";
 
-            for (int j = 0; j < escapeSymbols.Length; j++)
-            {
-                if (input[i + 1] == escapeSymbols[j])
-                {
-                    count++;
-                }
-            }
-
-            return count > 0;
+            return escapeSymbols.Contains(input[i + 1]);
         }
 
         static bool EndsWithAnUnfinishedHexNumber(string input)
