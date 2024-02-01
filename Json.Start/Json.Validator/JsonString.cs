@@ -86,7 +86,7 @@ namespace Json
 
             for (int j = i + 1; j < (i + 1) + numberOfHexDigits; j++)
             {
-                if ((char.ToUpper(input[j]) >= '0' && char.ToUpper(input[j]) <= '9') || (char.ToUpper(input[j]) >= 'A' && char.ToUpper(input[j]) <= 'Z'))
+                if (char.IsBetween(input[j], '0', '9') || char.IsBetween(char.ToUpper(input[j]), 'A', 'Z'))
                 {
                     countTheHexDigits++;
                 }
