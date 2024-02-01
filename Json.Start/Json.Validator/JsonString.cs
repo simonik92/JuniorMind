@@ -40,16 +40,22 @@ namespace Json
 
         static bool ContainsEscapeCharacter(string input)
         {
+            const int positionOfLastChar = 2;
+            if (input[input.Length - positionOfLastChar] == '\\')
+            {
+                return false;
+            }
+
             for (int i = 0; i < input.Length; i++)
             {
-                const int positionOfLastChar = 2;
-                if (input[input.Length - positionOfLastChar] == '\\')
+                if (i > 0 && input[i - 1] == '\\')
+                {
+                    continue;
+                }
+
+                if (input[i] == '\\' && !CheckEscapeCharacter(input, i))
                 {
                     return false;
-                }
-                else if (input[i] == '\\')
-                {
-                    return CheckEscapeCharacter(input, i);
                 }
             }
 
