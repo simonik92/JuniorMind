@@ -11,7 +11,7 @@ namespace Json
 
         public static bool IsAValidString(string input)
         {
-            return !ContainsControlCharacters(input) && ContainsEscapeCharacter(input) && !EndsWithAnUnfinishedHexNumber(input);
+            return !ContainsControlCharacters(input) && ContainsEscapeCharacter(input);
         }
 
         static bool IsWrappedInDoubleQuotes(string input)
@@ -57,6 +57,11 @@ namespace Json
                 {
                     return false;
                 }
+
+                if (input[i] == '\\' && input[i + 1] == 'u')
+                {
+                    return !CheckHexNumber(input, i + 1);
+                }
             }
 
             return true;
@@ -67,19 +72,6 @@ namespace Json
             const string escapeSymbols = "\\\"/bfnrtu";
 
             return escapeSymbols.Contains(input[i + 1]);
-        }
-
-        static bool EndsWithAnUnfinishedHexNumber(string input)
-        {
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i] == '\\' && input[i + 1] == 'u')
-                {
-                    return !CheckHexNumber(input, i + 1);
-                }
-            }
-
-            return false;
         }
 
         static bool CheckHexNumber(string input, int i)
