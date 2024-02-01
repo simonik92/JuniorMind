@@ -28,7 +28,7 @@ namespace Json
         {
             foreach (char c in input)
             {
-                if (c < '!')
+                if (c < ' ')
                 {
                     return true;
                 }
@@ -47,11 +47,6 @@ namespace Json
 
             for (int i = 0; i < input.Length; i++)
             {
-                if (i > 0 && input[i - 1] == '\\')
-                {
-                    continue;
-                }
-
                 if (input[i] == '\\' && !CheckEscapeCharacter(input, i))
                 {
                     return false;
@@ -68,7 +63,7 @@ namespace Json
 
         static bool CheckEscapeCharacter(string input, int i)
         {
-            const string escapeSymbols = "\\\"/bfnrtu";
+            const string escapeSymbols = " \\\"/bfnrtu";
 
             return escapeSymbols.Contains(input[i + 1]);
         }
