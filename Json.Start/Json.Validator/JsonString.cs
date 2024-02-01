@@ -58,9 +58,9 @@ namespace Json
                     return false;
                 }
 
-                if (input[i] == '\\' && input[i + 1] == 'u')
+                if (input[i] == '\\' && input[i + 1] == 'u' && !CheckHexNumber(input, i + 1))
                 {
-                    return !CheckHexNumber(input, i + 1);
+                    return false;
                 }
             }
 
@@ -76,7 +76,6 @@ namespace Json
 
         static bool CheckHexNumber(string input, int i)
         {
-            const string hexaDigits = "0123456789ABCDEF";
             const int numberOfHexDigits = 4;
             int countTheHexDigits = 0;
 
@@ -87,12 +86,9 @@ namespace Json
 
             for (int j = i + 1; j < (i + 1) + numberOfHexDigits; j++)
             {
-                for (int hexaDigitPosition = 0; hexaDigitPosition < hexaDigits.Length; hexaDigitPosition++)
+                if ((char.ToUpper(input[j]) >= '0' && char.ToUpper(input[j]) <= '9') || (char.ToUpper(input[j]) >= 'A' && char.ToUpper(input[j]) <= 'Z'))
                 {
-                    if (char.ToUpper(input[j]) == hexaDigits[hexaDigitPosition])
-                    {
-                        countTheHexDigits++;
-                    }
+                    countTheHexDigits++;
                 }
             }
 
