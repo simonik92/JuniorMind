@@ -63,7 +63,7 @@ namespace Json
 
         static bool CheckEscapeCharacter(string input, int i)
         {
-            const string escapeSymbols = " \\\"/bfnrtu";
+            const string escapeSymbols = "\\\"/bfnrtu";
 
             return escapeSymbols.Contains(input[i + 1]);
         }
