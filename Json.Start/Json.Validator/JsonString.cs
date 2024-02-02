@@ -65,7 +65,7 @@ namespace Json
         {
             const string escapeSymbols = "\\\"/bfnrtu";
 
-            return escapeSymbols.Contains(input[i + 1]);
+            return escapeSymbols.Contains(input[i + 1]) || input[i - 1] == '\\';
         }
 
         static bool CheckHexNumber(string input, int i)
