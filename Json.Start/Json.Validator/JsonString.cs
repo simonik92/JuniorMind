@@ -41,7 +41,7 @@ namespace Json
         static bool ContainsEscapeCharacter(string input)
         {
             int positionOfLastChar = input.Length - 2;
-            if (input[positionOfLastChar] == '\\' && input[positionOfLastChar - 1] != '\\')
+            if (input[positionOfLastChar] == '\\')
             {
                 return false;
             }
