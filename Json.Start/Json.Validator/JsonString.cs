@@ -40,20 +40,19 @@ namespace Json
 
         static bool ContainsEscapeCharacter(string input)
         {
-            int positionOfLastChar = input.Length - 2;
-            if (input[positionOfLastChar] == '\\' && input[positionOfLastChar - 1] != '\\')
-            {
-                return false;
-            }
-
             for (int i = 0; i < input.Length; i++)
             {
-                if (input[i] == '\\' && !CheckEscapeCharacter(input, i))
+                if (input[i] == '\\' && input[i + 1] == 'u' && !CheckHexNumber(input, i + 1))
                 {
                     return false;
                 }
 
-                if (input[i] == '\\' && input[i + 1] == 'u' && !CheckHexNumber(input, i + 1))
+                if (i > 0 && input[i - 1] == '\\' && CheckEscapeCharacter(input, i - 1))
+                {
+                    continue;
+                }
+
+                if (input[i] == '\\' && !CheckEscapeCharacter(input, i))
                 {
                     return false;
                 }
@@ -64,9 +63,15 @@ namespace Json
 
         static bool CheckEscapeCharacter(string input, int i)
         {
-            const string escapeSymbols = "\\\"/bfnrtu";
+            int positionOfLastChar = input.Length - 2;
+            if (input[positionOfLastChar] == '\\' && input[positionOfLastChar - 1] != '\\')
+            {
+                return false;
+            }
 
-            return escapeSymbols.Contains(input[i + 1]) || input[i - 1] == '\\';
+            const string escapeSymbols = "\"/bfnrtu\\";
+
+            return escapeSymbols.Contains(input[i + 1]);
         }
 
         static bool CheckHexNumber(string input, int i)
