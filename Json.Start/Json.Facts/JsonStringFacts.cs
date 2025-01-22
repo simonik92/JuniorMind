@@ -132,6 +132,18 @@ namespace Json.Facts
             Assert.False(IsJsonString(Quoted(@"a\u123")));
         }
 
+        [Fact]
+        public void ContainAHexNumber()
+        {
+            Assert.True(IsJsonString(Quoted(@"a\u0x1A")));
+        }
+
+        [Fact]
+        public void DoesNotHaveAReverseSolidusUnescaped()
+        {
+            Assert.False(IsJsonString(Quoted(@"a\\\")));
+        }
+
         public static string Quoted(string text)
             => $"\"{text}\"";
     }
