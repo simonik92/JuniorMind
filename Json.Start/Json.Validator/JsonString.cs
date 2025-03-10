@@ -59,6 +59,10 @@ namespace Json
                     {
                         i++;
                     }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
 
