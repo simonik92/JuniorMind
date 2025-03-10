@@ -12,7 +12,7 @@ namespace Json
 
         public static bool IsAValidString(string input)
         {
-            return !ContainsControlCharacters(input) && ContainsEscapeCharacter(input);
+            return !ContainsControlCharacters(input) && CheckEscapeCharacter(input);
         }
 
         static bool IsWrappedInDoubleQuotes(string input)
@@ -38,7 +38,7 @@ namespace Json
             return false;
         }
 
-        static bool ContainsEscapeCharacter(string input)
+        static bool CheckEscapeCharacter(string input)
         {
             for (int i = 0; i < input.Length; i++)
             {
@@ -47,31 +47,22 @@ namespace Json
                     return false;
                 }
 
-                if (i > 0 && input[i - 1] == '\\' && CheckEscapeCharacter(input, i - 1))
+                if (input[i] == '\\')
                 {
-                    continue;
-                }
+                    if (i + 1 >= input.Length - 1)
+                    {
+                     return false;
+                    }
 
-                if (input[i] == '\\' && !CheckEscapeCharacter(input, i))
-                {
-                    return false;
+                    const string escapeSymbols = "\"/bfnrtu\\";
+                    if (escapeSymbols.Contains(input[i + 1]))
+                    {
+                        i++;
+                    }
                 }
             }
 
             return true;
-        }
-
-        static bool CheckEscapeCharacter(string input, int i)
-        {
-            int positionOfLastChar = input.Length - 2;
-            if (input[positionOfLastChar] == '\\' && input[positionOfLastChar - 1] != '\\')
-            {
-                return false;
-            }
-
-            const string escapeSymbols = "\"/bfnrtu\\";
-
-            return escapeSymbols.Contains(input[i + 1]);
         }
 
         static bool CheckHexNumber(string input, int i)
