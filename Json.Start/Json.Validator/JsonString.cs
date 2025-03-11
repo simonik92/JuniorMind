@@ -40,8 +40,15 @@ namespace Json
 
         static bool CheckEscapeCharacter(string input)
         {
+            var skipNExtCharacter = false;
             for (int i = 0; i < input.Length; i++)
             {
+                if (skipNExtCharacter)
+                {
+                    skipNExtCharacter = false;
+                    continue;
+                }
+
                 if (input[i] == '\\' && input[i + 1] == 'u' && !CheckHexNumber(input, i + 1))
                 {
                     return false;
@@ -51,13 +58,13 @@ namespace Json
                 {
                     if (i + 1 >= input.Length - 1)
                     {
-                     return false;
+                        return false;
                     }
 
                     const string escapeSymbols = "\"/bfnrtu\\";
                     if (escapeSymbols.Contains(input[i + 1]))
                     {
-                        i++;
+                        skipNExtCharacter = true;
                     }
                     else
                     {
